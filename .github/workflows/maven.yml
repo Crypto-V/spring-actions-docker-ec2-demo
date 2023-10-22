@@ -28,13 +28,16 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Login to DockerHub
-      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-    - name: Build DockerImage
-      run: docker build -t integration/springboot-demo .
-    - name: Publish image to DockerHub
-      run: docker push integration/springboot-demo:latest
 
+    - name: Build and push Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: cripyv/pipeline-test-githubactions
+        tags: latest
+        registry: docker.io
+        dockerfile: Dockerfile
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
   deploy:
     needs: build

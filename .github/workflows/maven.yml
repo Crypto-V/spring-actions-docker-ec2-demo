@@ -29,7 +29,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Login to DockerHub
-      run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
     - name: Build DockerImage
       run: docker build -t integration/springboot-demo .
     - name: Publish image to DockerHub
@@ -38,7 +38,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: [springapp-runner]
+    runs-on: [self-hosted]
     steps:
       - name: Pull Image from DockerHub
         run: docker pull integration/springboot-demo:latest

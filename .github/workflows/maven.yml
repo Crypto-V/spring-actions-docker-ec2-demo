@@ -46,7 +46,7 @@ jobs:
       - name: Pull Image from DockerHub
         run: sudo docker pull cripyv/spring-actions-ec2-demo:latest
       - name: Delete old container
-        run: docker rm -f spring-actions-ec2-demo
+        run: sudo docker rm -f spring-actions-ec2-demo
       - name: Run as docker container
-        run: docker run -d -p 8081:8080 --name spring-actions-ec2-demo cripyv/spring-actions-ec2-demo:latest
+        run: sudo docker run -d -p 8081:8080 --name spring-actions-ec2-demo cripyv/spring-actions-ec2-demo:latest
 

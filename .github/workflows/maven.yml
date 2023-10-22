@@ -16,7 +16,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -29,3 +28,20 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Login to DockerHub
+      run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+    - name: Build DockerImage
+      run: docker build -t integration/springboot-demo
+    - name: Publish image to DockerHub
+      run: docker push integration/springboot-demo:latest
+
+  deploy:
+    needs: build
+    runs-on: [springapp-runner]
+    steps:
+      - name: Pull Image from DockerHub
+        run: docker pull integration/springboot-demo:latest
+      - name: Delete old container
+        run: docker rm -f spring-container-demo
+      - name: Run as docker container
+        run: docker run -d -p 8081:8080 --name spring-container-demo integration/springboot-demo

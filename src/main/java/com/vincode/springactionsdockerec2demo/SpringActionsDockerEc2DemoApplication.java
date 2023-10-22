@@ -11,7 +11,7 @@ public class SpringActionsDockerEc2DemoApplication {
 
     @RequestMapping("/api/v1/welcome")
     public String sayHi(){
-        return "Hello EC2";
+        return "Hello EC2 Application";
     }
 
 

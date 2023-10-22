@@ -44,7 +44,7 @@ jobs:
     runs-on: [self-hosted]
     steps:
       - name: Pull Image from DockerHub
-        run: docker pull cripyv/spring-actions-ec2-demo:latest
+        run: sudo docker pull cripyv/spring-actions-ec2-demo:latest
       - name: Delete old container
         run: docker rm -f spring-actions-ec2-demo
       - name: Run as docker container

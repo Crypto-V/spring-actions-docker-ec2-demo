@@ -32,7 +32,7 @@ jobs:
     - name: Build and push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: cripyv/pipeline-test-githubactions
+        image: cripyv/spring-actions-ec2-demo
         tags: latest
         registry: docker.io
         dockerfile: Dockerfile
@@ -44,9 +44,9 @@ jobs:
     runs-on: [self-hosted]
     steps:
       - name: Pull Image from DockerHub
-        run: docker pull integration/springboot-demo:latest
+        run: docker pull cripyv/spring-actions-ec2-demo:latest
       - name: Delete old container
-        run: docker rm -f spring-container-demo
+        run: docker rm -f spring-actions-ec2-demo
       - name: Run as docker container
-        run: docker run -d -p 8081:8080 --name spring-container-demo integration/springboot-demo:latest
+        run: docker run -d -p 8081:8080 --name spring-actions-ec2-demo cripyv/spring-actions-ec2-demo:latest
 

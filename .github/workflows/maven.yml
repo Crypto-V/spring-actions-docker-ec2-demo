@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: [springapp-runner]
+    runs-on: [self-hosted]
     steps:
       - name: Pull Image from DockerHub
         run: docker pull cripyv/spring-actions-ec2-demo:latest

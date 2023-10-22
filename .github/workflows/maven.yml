@@ -31,9 +31,10 @@ jobs:
     - name: Login to DockerHub
       run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
     - name: Build DockerImage
-      run: docker build -t integration/springboot-demo
+      run: docker build -t integration/springboot-demo .
     - name: Publish image to DockerHub
       run: docker push integration/springboot-demo:latest
+
 
   deploy:
     needs: build
@@ -44,4 +45,5 @@ jobs:
       - name: Delete old container
         run: docker rm -f spring-container-demo
       - name: Run as docker container
-        run: docker run -d -p 8081:8080 --name spring-container-demo integration/springboot-demo
+        run: docker run -d -p 8081:8080 --name spring-container-demo integration/springboot-demo:latest
+
